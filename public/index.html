@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ruby on Rails: Simple Form Creation</title>
+    <style type="text/css" media="screen">
+        #container {
+            overflow: hidden;
+        }
+        .column_left, .column_right {
+            width: 400px;
+            float: left;
+            margin: 0 10px 0 0;
+            background-color: #f7f7f7;
+            border: 1px solid #f5f5f5;
+            /* the trick */
+            padding-bottom: 1000px;
+            margin-bottom: -1000px;
+        }
+        button {
+            font-size:12px;
+        }
+        body {
+            background-color: #eef;
+            font-size:12px;
+        }
+        #tabs {
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10px;
+        }
+        .form_widget{
+            width:150px;
+            height:25px;
+        }
+
+    </style>
+
+  </head>
+  <body>
+  <div id="container">
+      <div class="column_left">
+          <div id="tabs">
+              <ul>
+                  <li><a href="#tabs-1">Create</a>
+                  </li>
+                  <li><a href="#tabs-2">Modify</a>
+                  </li>
+              </ul>
+              <div id="tabs-1">
+                  <button id="create_simple_text" class="creation">Create Simple Input Box</button><br/>
+                  <button id="create_simple_button" class="creation">Create Simple Button</button><br/>
+              </div>
+              <div id="tabs-2">
+                  Text:
+                  <input type="text" id="widget_text" /> <br/>
+                  Color:
+                  <input type="text" id="widget_color" /> <br/>
+                  <button id="button_modify">Make changes</button>
+              </div>
+          </div>
+      </div>
+      <div class="column_right">
+          <div id="form_ground">
+
+          </div>
+      </div>
+  </div>
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+  <script type="text/javascript">
+
+      var curentobj;
+      $("#tabs").tabs();
+      $('#form_ground').sortable();
+      $('#create_simple_text').click(function(){
+          $('#form_ground').append('<input type="text" value="simple text" class="form_widget" />')
+          form_widget_set();
+      });
+      $('#create_simple_button').click(function(){
+          $('#form_ground').append('<input type="submit"  class="form_widget" value="simple button" />')
+          form_widget_set();
+      });
+      function form_widget_set(){
+          $('.form_widget').resizable();
+          $('.form_widget').click(function(e){
+              $('#widget_text').attr('value', $(this).val());
+              $('#widget_color').attr('value', $(this).css('color'));
+              currentobj = this;
+              $('#tabs').tabs('select', 1);
+              e.preventDefault();
+          });
+      }
+      $('#button_modify').click(function(){
+          $(currentobj).val($('#widget_text').val());
+          $(currentobj).css('color', $('#widget_color').val());
+      });
+  </script>
+  </body>
+</html>
